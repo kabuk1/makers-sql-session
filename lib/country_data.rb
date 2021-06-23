@@ -52,6 +52,8 @@ class CountryData
   end
 
   def self.third_lowest_gni_per_capita_in_south_america
+    result = DatabaseConnection.query("SELECT * FROM countries WHERE continent='South America' ORDER BY gni LIMIT 1 OFFSET 2;")
+    result.map{ |country| CountryData.new(country['name'], country['continent'], country['population'], country['density'], country['gni']) }
   end
 
   def self.all_countries_not_in_europe
