@@ -42,6 +42,8 @@ class CountryData
   end
 
   def self.population_density_between_50_and_150
+    result = DatabaseConnection.query("SELECT * FROM countries WHERE population BETWEEN 50 AND 150;")
+    result.map{ |country| CountryData.new(country['name'], country['continent'], country['population'], country['density'], country['gni']) }
   end
 
   def self.highest_gni_per_capita_in_asia
