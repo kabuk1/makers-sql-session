@@ -47,6 +47,8 @@ class CountryData
   end
 
   def self.highest_gni_per_capita_in_asia
+    result = DatabaseConnection.query("SELECT * FROM countries WHERE continent='Asia' ORDER BY gni DESC LIMIT 1;")
+    result.map{ |country| CountryData.new(country['name'], country['continent'], country['population'], country['density'], country['gni']) }
   end
 
   def self.third_lowest_gni_per_capita_in_south_america
