@@ -47,19 +47,23 @@ class CountryData
   end
 
   def self.highest_gni_per_capita_in_asia
-    result = DatabaseConnection.query("SELECT * FROM countries WHERE continent='Asia' ORDER BY gni DESC LIMIT 1;")
+    result = DatabaseConnection.query("SELECT * FROM countries WHERE continent = 'Asia' ORDER BY gni DESC LIMIT 1;")
     result.map{ |country| CountryData.new(country['name'], country['continent'], country['population'], country['density'], country['gni']) }
   end
 
   def self.third_lowest_gni_per_capita_in_south_america
-    result = DatabaseConnection.query("SELECT * FROM countries WHERE continent='South America' ORDER BY gni LIMIT 1 OFFSET 2;")
+    result = DatabaseConnection.query("SELECT * FROM countries WHERE continent = 'South America' ORDER BY gni LIMIT 1 OFFSET 2;")
     result.map{ |country| CountryData.new(country['name'], country['continent'], country['population'], country['density'], country['gni']) }
   end
 
   def self.all_countries_not_in_europe
+    result = DatabaseConnection.query("SELECT * FROM countries WHERE continent != 'Europe';")
+    result.map{ |country| CountryData.new(country['name'], country['continent'], country['population'], country['density'], country['gni']) }
   end
 
   def self.all_data_country_name_and_population_only
+    result = DatabaseConnection.query("SELECT name, population FROM countries;")
+    result.map{ |country| CountryData.new(country['name'], country['continent'], country['population'], country['density'], country['gni']) }
   end
 
   def self.south_american_countries_hide_population
