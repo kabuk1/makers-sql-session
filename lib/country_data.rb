@@ -67,11 +67,12 @@ class CountryData
   end
 
   def self.south_american_countries_hide_population
-    result = DatabaseConnection.query("SELECT name, continent, density, gni FROM countries WHERE continent = 'South America'")
+    result = DatabaseConnection.query("SELECT name, continent, density, gni FROM countries WHERE continent = 'South America';")
     result.map{ |country| CountryData.new(country['name'], country['continent'], country['population'], country['density'], country['gni']) }
   end
 
   def self.countries_not_in_asia_hide_gni_per_capita_and_population_density
-    
+    result = DatabaseConnection.query("SELECT name, continent, population FROM countries WHERE continent != 'Asia';")
+    result.map{ |country| CountryData.new(country['name'], country['continent'], country['population'], country['density'], country['gni']) }
   end
 end
